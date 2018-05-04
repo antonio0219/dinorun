@@ -9,6 +9,7 @@ windowHeight = 250
 
 #listas de obstáculos y suelo
 floor = [(background.background(pygame, 'floor2', 50, 200))]
+lastTerrain = floor[0]
 clouds = []
 cactusAndBirds = []
 
@@ -43,12 +44,12 @@ while True:
     if gameState == 0:
         floor[0].draw(surface)
         player.jump()
-        player.draw(surface)
+        player.draw(surface, gameState, GAME_TIME)
     if gameState == 1:
         for i in floor:
             i.draw(surface)
         pygame.draw.rect(surface,(255,255,255),(squareX,0,windowWidth,windowHeight))
-        player.draw(surface)
+        player.draw(surface, gameState, GAME_TIME)
         if squareX >= windowWidth:
             gameState = 2
         else:
@@ -62,8 +63,10 @@ while True:
                 i.mensageReceived()
                 floor.append((background.background(pygame, 'floor2', (i.x + i.getWidth()), 200)))
                 floor.append((background.background(pygame, 'floor1', (i.x + i.getWidth() + 116), 200)))
+            if i.autoDestruction(windowWidth):
+                pass
         player.jump()
-        player.draw(surface)
+        player.draw(surface, gameState, GAME_TIME)
         
     for event in GAME_EVENTS.get():
         if event.type == GAME_GLOBALS.QUIT:
@@ -74,7 +77,13 @@ while True:
                 if gameState == 0:
                     gameState = 1
                     floor.append((background.background(pygame, 'floor1', 50 + nextFloor, 200)))
-        
+            if event.key == pygame.K_DOWN:
+                if gameState == 2:
+                    player.letsDodge('True')
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                if gameState == 2:
+                    player.letsDodge('False')
                 
         
     clock.tick(60)

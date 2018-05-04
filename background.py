@@ -19,7 +19,8 @@ class background():
             return True
             
     def autoDestruction(self, windowWidth):
-        pass
+        if self.x + self.width < windowWidth - 30:
+            return True
     
     def mensageReceived(self):
         self.givedMensage = True
