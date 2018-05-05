@@ -24,7 +24,7 @@ class dinosaur():
             self.velOfFalling = 0.5
         
     def letsDodge(self, can):
-        if can == 'True' and self.y >= 155:
+        if can == 'True' and self.y >= 155 and self.dodging == False:
             self.dodging = True
             self.width = 80
             self.height = 38
@@ -61,7 +61,6 @@ class dinosaur():
                 if self.dodging == False:
                     if self.runningState == 1:
                         self.runningState = 2
-                        print('me deberia cambiar a runningsatte 2')
                     if self.runningState == 2:
                         self.runningState = 1
                 if self.dodging:

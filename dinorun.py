@@ -10,7 +10,7 @@ windowHeight = 250
 #listas de obstáculos y suelo
 floor = [(background.background(pygame, 'floor2', 50, 200))]
 lastTerrain = floor[0]
-clouds = []
+clouds = [(background.background(pygame, 'cloud', windowWidth, random.randint(1, 150)))]
 cactusAndBirds = []
 
 #variables
@@ -50,6 +50,13 @@ while True:
             i.draw(surface)
         pygame.draw.rect(surface,(255,255,255),(squareX,0,windowWidth,windowHeight))
         player.draw(surface, gameState, GAME_TIME)
+        for i in clouds:
+            i.draw(surface)
+            i.move(vel)
+            i.another(windowWidth)
+            if i.another(windowWidth):
+                i.mensageReceived()
+                clouds.append((background.background(pygame, 'cloud', windowWidth, random.randint(1, 150))))
         if squareX >= windowWidth:
             gameState = 2
         else:
@@ -65,6 +72,13 @@ while True:
                 floor.append((background.background(pygame, 'floor1', (i.x + i.getWidth() + 116), 200)))
             if i.autoDestruction(windowWidth):
                 pass
+        for i in clouds:
+            i.draw(surface)
+            i.move(vel)
+            i.another(windowWidth)
+            if i.another(windowWidth):
+                i.mensageReceived()
+                clouds.append((background.background(pygame, 'cloud', windowWidth, random.randint(1, 150))))
         player.jump()
         player.draw(surface, gameState, GAME_TIME)
         

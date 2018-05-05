@@ -9,4 +9,6 @@ class obstacle():
         if self.type == 'cactus':
             pass
         
+        if self.type == 'bird':
+            pass
         
